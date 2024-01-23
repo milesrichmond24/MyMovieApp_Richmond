@@ -24,7 +24,13 @@ class FavesViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print(AppData.favorites)
         if(AppData.favorites.count == 0) {
+            poster.image = UIImage(systemName: "star.fill")
+            filmType.text = "Film Type:"
+            imdbID.text = "imdbID: "
+            year.text = "Year: "
+            movieTitle.text = "No favorites"
             return
         }
         setImage()
@@ -34,6 +40,9 @@ class FavesViewController: UIViewController {
         movieTitle.text = AppData.favorites[index].value(forKey: "Title") as? String ?? "?"
     }
     
+    // This function does not work on the school macbooks, since the image server does not
+    // respond to non https connections, which the macbooks cannot do
+    // A large warning gets dumped into the console, but it can be ignored
     func setImage() {
         let session = URLSession.shared
         
@@ -76,6 +85,12 @@ class FavesViewController: UIViewController {
         viewWillAppear(true)
     }
     
+    @IBAction func unfavorite(_ sender: UIButton) {
+        AppData.favorites.remove(at: index)
+        UserDefaults.standard.setValue(AppData.favorites, forKey: "faves")
+        
+        viewWillAppear(true)
+    }
     /*
     // MARK: - Navigation
 

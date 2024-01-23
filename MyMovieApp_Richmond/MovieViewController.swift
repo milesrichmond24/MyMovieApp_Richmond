@@ -34,6 +34,7 @@ class MovieViewController: UIViewController {
         let session = URLSession.shared
         
         let url = URL(string: AppData.selected.value(forKey: "Poster") as? String ?? "")!
+        print("\(url)")
         
         let dataTask = session.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
             if let error = error {
